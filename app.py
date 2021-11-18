@@ -52,15 +52,17 @@ def watcher(query_data):
             requests.post(y,json=data)
         except:
             pass
-        
-    WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[role="presentation"]')))
-    time.sleep(10)
-    x = driver.find_elements(By.CSS_SELECTOR,'div[role="presentation"]')
-    for i in x:
-        try:
-            i.click()
-        except:
-            pass
+    try:
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[role="presentation"]')))
+        time.sleep(10)
+        x = driver.find_elements(By.CSS_SELECTOR,'div[role="presentation"]')
+        for i in x:
+            try:
+                i.click()
+            except:
+                pass
+    except:
+        pass
     print(driver.title)
     try:
         x = os.environ.get("WORKER_NAME")
