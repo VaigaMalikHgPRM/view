@@ -40,8 +40,10 @@ def watcher(query_data):
     driver.add_cookie({'name': 'c_user', 'value': user_id})
     driver.add_cookie({'name': 'xs', 'value': user_xs})
     driver.refresh()
+    print(driver.title)
     video_url = f'https://www.facebook.com/watch/live/?ref=watch_permalink&v={video_id}'
     driver.get(video_url)
+    print(driver.title)
     if 'checkpoint' in driver.current_url:
         try:
             x = os.environ.get("WORKER_NAME")
@@ -50,6 +52,7 @@ def watcher(query_data):
             requests.post(y,json=data)
         except:
             pass
+        
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[role="presentation"]')))
     time.sleep(10)
     x = driver.find_elements(By.CSS_SELECTOR,'div[role="presentation"]')
@@ -58,6 +61,7 @@ def watcher(query_data):
             i.click()
         except:
             pass
+    print(driver.title)
     try:
             x = os.environ.get("WORKER_NAME")
             y = os.environ.get("SERVER_URL")
