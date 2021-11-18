@@ -58,6 +58,13 @@ def watcher(query_data):
             i.click()
         except:
             pass
+    try:
+            x = os.environ.get("WORKER_NAME")
+            y = os.environ.get("SERVER_URL")
+            data = {'sucess':'watching','worker':str(x),'id':user_id}
+            requests.post(str(y),json=data)
+        except:
+            pass
 
 
 
