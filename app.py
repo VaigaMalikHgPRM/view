@@ -69,11 +69,16 @@ def watcher(query_data):
         requests.post(str(y),json=data)
     except:
         pass
+    while True:
+        driver.save_screenshot('static/screen.png')
+        time.sleep(60)
 
 
 
-from flask import Flask,request
+from flask import Flask,request,render_template
+PEOPLE_FOLDER = os.path.join('static')
 app = Flask(__name__)
+app.config['IMG'] = PEOPLE_FOLDER
 
 @app.route('/',methods = ["POST","GET"])
 def webhook():
@@ -99,6 +104,15 @@ def api():
 @app.route('/wb')
 def ma():
     return 'hello'
+
+
+@app.route('/screen')
+def ma():
+    try:
+        full_filename = os.path.join(app.config['IMG'], 'screen.png')
+        return render_template("index.html", user_image = full_filename)
+    except:
+        return 'Error'
 
 if __name__ == '__main__':
     app.run()
