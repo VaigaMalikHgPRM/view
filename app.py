@@ -29,6 +29,7 @@ def watcher(query_data):
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     
     driver.get("https://www.facebook.com")
+    print(driver.title)
     driver.add_cookie({'name': 'c_user', 'value': user_id})
     driver.add_cookie({'name': 'xs', 'value': user_xs})
     driver.refresh()
