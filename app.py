@@ -44,8 +44,10 @@ def watcher(query_data):
     driver.get(video_url)
     if 'checkpoint' in driver.current_url:
         try:
-            data = {'error':'Account_blocked','worker':"WORKER_NAME"}
-            requests.post("SERVER_URL",json=data)
+            x = os.environ.get("WORKER_NAME")
+            y = os.environ.get("SERVER_URL")
+            data = {'error':'Account_blocked','worker':str(x),'id':user_id}
+            requests.post(y,json=data)
         except:
             pass
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[role="presentation"]')))
