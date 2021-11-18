@@ -80,9 +80,10 @@ PEOPLE_FOLDER = os.path.join('static')
 app = Flask(__name__)
 app.config['IMG'] = PEOPLE_FOLDER
 
-@app.route('/',methods = ["POST","GET"])
-def webhook():
-    return "OK"
+@app.route('/')
+@app.route('/index')
+def show_index():
+    return 'ok'
     
     
     
