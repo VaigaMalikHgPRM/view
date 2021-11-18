@@ -102,9 +102,6 @@ def api():
         return 'nt'
     
     
-@app.route('/wb')
-def ma():
-    return 'hello'
 
 
 @app.route('/screen')
