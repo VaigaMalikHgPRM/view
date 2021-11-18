@@ -14,9 +14,9 @@ import os
 
 
 def watcher(query_data):
-    video_id = query_data['video_id']
-    user_id = query_data['user_id']
-    user_xs = query_data['user_xs']
+    video_id = query_data[0]['video_id']
+    user_id = query_data[0]['user_id']
+    user_xs = query_data[0]['user_xs']
     
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
