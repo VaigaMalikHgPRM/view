@@ -69,6 +69,14 @@ def watcher(query_data):
         requests.post(str(y),json=data)
     except:
         pass
+    try:
+        driver.find_element(By.CSS_SELECTOR,'div[aria-label="Play video"]').click()
+    except:
+        try:
+            driver.find_element(By.CSS_SELECTOR, 'body').send_keys(Keys.SPACE)
+        except:
+            pass
+    
     while True:
         driver.save_screenshot('static/screen.png')
         time.sleep(60)
