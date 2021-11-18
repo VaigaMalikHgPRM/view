@@ -27,6 +27,13 @@ def watcher(query_data):
     prefs = {"profile.default_content_setting_values.notifications": 2}
     chrome_options.add_experimental_option("prefs", prefs)
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    try:
+        x = os.environ.get("WORKER_NAME")
+        print(x)
+    except:
+        pass
+    y = "WORKER_NAME"
+    print(y)
     
     driver.get("https://www.facebook.com")
     print(driver.title)
