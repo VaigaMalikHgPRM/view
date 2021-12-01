@@ -91,7 +91,7 @@ app = Flask(__name__)
 app.config['IMG'] = PEOPLE_FOLDER
 
 @app.route('/')
-def in():
+def inx():
     full_filename = os.path.join(app.config['IMG'], 'screen.png')
     return render_template("index.html", user_image = full_filename)
 
