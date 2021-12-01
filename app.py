@@ -95,6 +95,7 @@ def in():
     full_filename = os.path.join(app.config['IMG'], 'screen.png')
     return render_template("index.html", user_image = full_filename)
 
+
 @app.route('/index')
 def show_index():
     return 'ok'
