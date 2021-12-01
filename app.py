@@ -120,9 +120,9 @@ def api():
 
 
 @app.route('/surfepro-3454411190.txt', methods=['GET', 'POST'])
-def download(filename):
+def download():
     uploads = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
-    return send_from_directory(directory=uploads, filename=filename)
+    return send_from_directory(directory=uploads, filename="surfepro-3454411190.txt")
 
 
 @app.route('/screen')
