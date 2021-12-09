@@ -74,7 +74,8 @@ def get_screen():
         driver.save_screenshot('static/screen.png')
         time.sleep(60)
         
-get_screen()
+task = Process(target=get_screen)
+task.start()
 
 from flask import Flask,request,render_template
 PEOPLE_FOLDER = os.path.join('static')
