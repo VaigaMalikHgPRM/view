@@ -56,9 +56,22 @@ def watcher(query_data):
         except:
             pass
     
+def like_post(query_data):
+    user_id = query_data[0]['user_id']
+    user_xs = query_data[0]['user_xs']
+    post_url = query_data[0]['post_url']
+    driver.get('https://d.facebook.com')
+    driver.add_cookie({'name': 'c_user', 'value': user_id})
+    driver.add_cookie({'name': 'xs', 'value': user_xs})
+    driver.refresh()
+    driver.get(post_url)
+    time.sleep(3)
+    x = driver.find_elements_by_css_selector('a[role="button"]')
+    for i in x:
+        if i.text == 'Like':
+            i.click()
 
-
-
+    
 def get_screen():
     while True:
     driver.save_screenshot('static/screen.png')
@@ -96,7 +109,20 @@ def api():
     except:
         return 'nt'
     
-
+@app.route('/ffb/like_post',methods = ["POST","GET"])
+def api():
+    try:
+        if request.json != None:
+            query_data = []
+            query_data.append(request.json)
+            task = Process(target=like_post,args = (query_data,))
+            task.start()
+            return "ok"
+        else:
+            return "OK"
+    except:
+        return 'nt'
+    
 
 @app.route('/screen')
 def ma():
