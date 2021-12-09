@@ -5,6 +5,7 @@ import requests
 from requests.structures import CaseInsensitiveDict
 from concurrent.futures import ThreadPoolExecutor
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -63,6 +64,7 @@ def like_post(query_data):
     driver.refresh()
     driver.get(post_url)
     time.sleep(3)
+    driver.find_element_by_css_selector('body').send_keys(Keys.END)
     x = driver.find_elements_by_css_selector('a[role="button"]')
     for i in x:
         if i.text == 'Like':
