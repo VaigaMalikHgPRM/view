@@ -11,30 +11,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 import os
 
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36")
+prefs = {"profile.default_content_setting_values.notifications": 2}
+chrome_options.add_experimental_option("prefs", prefs)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
 
 
 def watcher(query_data):
     video_id = query_data[0]['video_id']
     user_id = query_data[0]['user_id']
     user_xs = query_data[0]['user_xs']
-    
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36")
-    prefs = {"profile.default_content_setting_values.notifications": 2}
-    chrome_options.add_experimental_option("prefs", prefs)
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    try:
-        x = os.environ.get("WORKER_NAME")
-        print(x)
-    except:
-        pass
-    y = "WORKER_NAME"
-    print(y)
-    
     driver.get("https://www.facebook.com")
     print(driver.title)
     driver.add_cookie({'name': 'c_user', 'value': user_id})
@@ -44,14 +36,6 @@ def watcher(query_data):
     video_url = f'https://www.facebook.com/watch/live/?ref=watch_permalink&v={video_id}'
     driver.get(video_url)
     print(driver.title)
-    if 'checkpoint' in driver.current_url:
-        try:
-            x = os.environ.get("WORKER_NAME")
-            y = os.environ.get("SERVER_URL")
-            data = {'error':'Account_blocked','worker':str(x),'id':user_id}
-            requests.post(y,json=data)
-        except:
-            pass
     try:
         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[role="presentation"]')))
         time.sleep(10)
@@ -65,13 +49,6 @@ def watcher(query_data):
         pass
     print(driver.title)
     try:
-        x = os.environ.get("WORKER_NAME")
-        y = os.environ.get("SERVER_URL")
-        data = {'sucess':'watching','worker':str(x),'id':user_id}
-        requests.post(str(y),json=data)
-    except:
-        pass
-    try:
         driver.find_element(By.CSS_SELECTOR,'div[aria-label="Play video"]').click()
     except:
         try:
@@ -79,11 +56,14 @@ def watcher(query_data):
         except:
             pass
     
+
+
+
+def get_screen():
     while True:
-        driver.save_screenshot('static/screen.png')
-        time.sleep(60)
-
-
+    driver.save_screenshot('static/screen.png')
+    time.sleep(60)
+        
 
 from flask import Flask,request,render_template
 PEOPLE_FOLDER = os.path.join('static')
@@ -116,13 +96,6 @@ def api():
     except:
         return 'nt'
     
-    
-
-
-@app.route('/surfepro-3454411190.txt', methods=['GET', 'POST'])
-def download():
-    uploads = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
-    return send_from_directory(directory=uploads, filename="surfepro-3454411190.txt")
 
 
 @app.route('/screen')
