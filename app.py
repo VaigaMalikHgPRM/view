@@ -20,8 +20,6 @@ prefs = {"profile.default_content_setting_values.notifications": 2}
 chrome_options.add_experimental_option("prefs", prefs)
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
-
-
 def watcher(query_data):
     video_id = query_data[0]['video_id']
     user_id = query_data[0]['user_id']
