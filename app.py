@@ -72,9 +72,10 @@ def like_post(query_data):
     
 def get_screen():
     while True:
-    driver.save_screenshot('static/screen.png')
-    time.sleep(60)
+        driver.save_screenshot('static/screen.png')
+        time.sleep(60)
         
+get_screen()
 
 from flask import Flask,request,render_template
 PEOPLE_FOLDER = os.path.join('static')
