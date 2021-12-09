@@ -108,7 +108,7 @@ def api():
         return 'nt'
     
 @app.route('/ffb/like_post',methods = ["POST","GET"])
-def api():
+def api_like_post():
     try:
         if request.json != None:
             query_data = []
