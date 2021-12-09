@@ -83,8 +83,7 @@ app.config['IMG'] = PEOPLE_FOLDER
 
 @app.route('/')
 def inx():
-    full_filename = os.path.join(app.config['IMG'], 'screen.png')
-    return render_template("index.html", user_image = full_filename)
+    return 'ok'
 
 
 @app.route('/index')
