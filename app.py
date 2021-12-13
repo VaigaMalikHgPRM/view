@@ -69,7 +69,25 @@ def like_post(query_data):
     for i in x:
         if i.text == 'Like':
             i.click()
+    driver.save_screenshot('static/screen.png')
 
+def comment_post(query_data):
+    user_id = query_data[0]['user_id']
+    user_xs = query_data[0]['user_xs']
+    post_url = query_data[0]['post_url']
+    comment_text = query_data[0]['comment_text']
+    driver.get('https://d.facebook.com')
+    driver.add_cookie({'name': 'c_user', 'value': user_id})
+    driver.add_cookie({'name': 'xs', 'value': user_xs})
+    driver.refresh()
+    driver.get(post_url)
+    time.sleep(3)
+    driver.find_element_by_css_selector('body').send_keys(Keys.END)
+    driver.find_element_by_name('comment_text').send_keys(comment_text)
+    time.sleep(1)
+    driver.find_element_by_css_selector('input[value="Comment"]').click()
+    driver.save_screenshot('static/screen.png')
+    
     
 def get_screen():
     while True:
@@ -123,7 +141,21 @@ def api_like_post():
     except:
         return 'nt'
     
-
+@app.route('/ffb/comment_post',methods = ["POST","GET"])
+def api_comment_post():
+    try:
+        if request.json != None:
+            query_data = []
+            query_data.append(request.json)
+            task = Process(target=comment_post,args = (query_data,))
+            task.start()
+            return "ok"
+        else:
+            return "OK"
+    except:
+        return 'nt'
+    
+    
 @app.route('/screen')
 def ma():
     try:
