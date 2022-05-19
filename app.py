@@ -85,6 +85,7 @@ def comment_post(query_data):
     time.sleep(3)
     #driver.find_element_by_css_selector('body').send_keys(Keys.END)
     driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
+    driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
     ActionChains(driver).move_to_element(driver.find_element_by_id('composerInput')).perform()
     driver.find_element_by_name('comment_text').send_keys(comment_text)
     time.sleep(1)
