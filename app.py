@@ -83,13 +83,18 @@ def comment_post(query_data):
     user_xs = query_data[0]['user_xs']
     post_url = query_data[0]['post_url']
     comment_text = query_data[0]['comment_text']
-    driver.get('https://www.facebook.com')
     driver.maximize_window()
+    driver.get(post_url)
     driver.add_cookie({'name': 'c_user', 'value': user_id})
     driver.add_cookie({'name': 'xs', 'value': user_xs})
-    driver.refresh()
     driver.get(post_url)
     time.sleep(3)
+    
+    y = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
+    actions = ActionChains(driver)
+    actions.move_to_element(y).perform()
+    
+    time.sleep(1)
     
     x = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Write a comment"]')
     actions = ActionChains(driver)
