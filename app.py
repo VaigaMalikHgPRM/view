@@ -59,17 +59,20 @@ def like_post(query_data):
     user_id = query_data[0]['user_id']
     user_xs = query_data[0]['user_xs']
     post_url = query_data[0]['post_url']
-    driver.get('https://d.facebook.com')
+    driver.get('https://www.facebook.com')
+    driver.maximize_window()
     driver.add_cookie({'name': 'c_user', 'value': user_id})
     driver.add_cookie({'name': 'xs', 'value': user_xs})
     driver.refresh()
     driver.get(post_url)
     time.sleep(3)
-    driver.find_element_by_css_selector('body').send_keys(Keys.END)
-    x = driver.find_elements_by_css_selector('a[role="button"]')
-    for i in x:
-        if i.text == 'Like':
-            i.click()
+    
+    x = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
+    actions = ActionChains(driver)
+    actions.move_to_element(x).perform()
+    time.sleep(1)
+    x.click()
+    
     driver.save_screenshot('static/screen.png')
 
 def comment_post(query_data):
@@ -77,19 +80,21 @@ def comment_post(query_data):
     user_xs = query_data[0]['user_xs']
     post_url = query_data[0]['post_url']
     comment_text = query_data[0]['comment_text']
-    driver.get('https://d.facebook.com')
+    driver.get('https://www.facebook.com')
+    driver.maximize_window()
     driver.add_cookie({'name': 'c_user', 'value': user_id})
     driver.add_cookie({'name': 'xs', 'value': user_xs})
     driver.refresh()
     driver.get(post_url)
     time.sleep(3)
-    #driver.find_element_by_css_selector('body').send_keys(Keys.END)
-    driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
-    driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
-    ActionChains(driver).move_to_element(driver.find_element_by_id('composerInput')).perform()
-    driver.find_element_by_name('comment_text').send_keys(comment_text)
+    
+    x = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Write a comment"]')
+    actions = ActionChains(driver)
+    actions.move_to_element(x).perform()
     time.sleep(1)
-    driver.find_element_by_css_selector('input[value="Comment"]').click()
+    x.send_keys(comment_text)
+    x.send_keys(Keys.ENTER)
+
     driver.save_screenshot('static/screen.png')
     
     
