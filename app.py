@@ -89,10 +89,12 @@ def comment_post(query_data):
     driver.add_cookie({'name': 'xs', 'value': user_xs})
     driver.get(post_url)
     time.sleep(3)
-    
-    y = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
-    actions = ActionChains(driver)
-    actions.move_to_element(y).perform()
+    try:
+        y = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
+        actions = ActionChains(driver)
+        actions.move_to_element(y).perform()
+    except:
+        pass
     
     time.sleep(1)
     
