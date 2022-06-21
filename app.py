@@ -56,6 +56,7 @@ def watcher(query_data):
             pass
     
 def like_post(query_data):
+    print('post like 0')
     user_id = query_data[0]['user_id']
     user_xs = query_data[0]['user_xs']
     post_url = query_data[0]['post_url']
@@ -72,10 +73,12 @@ def like_post(query_data):
     actions.move_to_element(x).perform()
     time.sleep(1)
     x.click()
+    print('post like 1')
     
     driver.save_screenshot('static/screen.png')
 
 def comment_post(query_data):
+    print('post comment 0')
     user_id = query_data[0]['user_id']
     user_xs = query_data[0]['user_xs']
     post_url = query_data[0]['post_url']
@@ -94,6 +97,8 @@ def comment_post(query_data):
     time.sleep(1)
     x.send_keys(comment_text)
     x.send_keys(Keys.ENTER)
+    
+    print('post comment 1')
 
     driver.save_screenshot('static/screen.png')
     
